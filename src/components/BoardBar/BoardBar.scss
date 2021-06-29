@@ -1,0 +1,9 @@
+@import '_setting';
+
+.navrbar-board{
+    background-color: $broad-bg-color;
+    font-size: 1.1em;
+    padding-left: $gap;
+    display: flex;
+    align-items: center;
+  }
