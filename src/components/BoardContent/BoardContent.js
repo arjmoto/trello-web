@@ -14,10 +14,6 @@ function BoardContent(){
     if (boardFromDB) {
       setBoard(boardFromDB)
       // sort column
-      // boardFromDB.columns.sort(function(a,b){
-      //   return boardFromDB.columnOrder.indexOf(a.id) - boardFromDB.columnOrder.indexOf(b.id)
-      // })
-
       setColumns(mapOrder(boardFromDB.columns, boardFromDB.columnOrder, 'id'))
     }
   }, [])

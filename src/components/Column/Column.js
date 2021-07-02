@@ -12,7 +12,6 @@ function Column(props){
             <header>{column.title}</header>
             <ul className="card-list">
             {cards.map((card, index) => <Card key = {index} card = {card} />)}
-
             </ul>
             <footer>Add another card</footer>
           </div>

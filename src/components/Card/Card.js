@@ -2,12 +2,12 @@ import React from 'react'
 
 import './Card.scss'
 
-function Card(progs){
-  const { card } = progs
+function Card(props){
+  const { card } = props
     return (
         
-              <li className="Card-item">
-              { card.cover && <img src={card.cover} className = "card-cover" alt="sonquachdev" /> }
+              <li className="card-item">
+                {card.cover && <img src={card.cover} className="card-cover" alt="sonquachdev" /> }
                 {card.title}
               </li>
              

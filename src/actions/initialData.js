@@ -15,7 +15,7 @@ export const initialData = {
                             boardId: 'board-1',
                             columnId: 'column-1',
                             title: 'Title card 1',
-                            cover: null
+                            cover: "https://loremflickr.com/320/240/dog"
                         },
                         { id: 'card-2', boardId: 'board-1', columnId: 'column-1', title: 'Title card 2', cover: null },
                         { id: 'card-3', boardId: 'board-1', columnId: 'column-1', title: 'Title card 3', cover: null },
