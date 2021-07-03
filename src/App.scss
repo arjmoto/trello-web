@@ -10,8 +10,9 @@ body{
 }
 .trello-main {
   height: 100vh;
-  display: grid;
-  grid-template-rows: 40px 50px 1fr;
+  overflow: hidden;
+  
+  
   background-color: $broad-bg-color;
  
 
