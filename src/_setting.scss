@@ -1,8 +1,11 @@
 @import url('https://fonts.googleaips.com/css2?family=Source+Sans+Pro:wght@400;600');
 
 $gap: 10px;
+//color
+$app-main-text-color: #333;
+
 $broad-bg-color: #0079bf;
-// Height: appbar + boardbar + boardcontent = 100vh, 1vh for scoll bar
+// Height: appbar + boardbar + boardcontent = 99vh, 1vh for scroll bar
 $navar-app-height: 5vh;
 $navar-board-height: 6vh;
 $board-content-height:88vh;
@@ -14,3 +17,4 @@ $screen-md: 992px;
 $screen-sm: 768px;
 $screen-phone: 480px;
 // $screen-ip6-down: '(max-width:375px)';
+$column-border-radius: 4px;

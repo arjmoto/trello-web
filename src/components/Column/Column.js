@@ -3,12 +3,15 @@ import { Container, Draggable } from 'react-smooth-dnd'
 import './Column.scss'
 import Card from 'components/Card/Card'
 import { mapOrder } from 'utilities/sorts'
-const onCardDrop = (dropResult) => {
-  // eslint-disable-next-line no-console
-  console.log(dropResult)
+const onCardDrop = (columnid, dropResult) => {
+  if (dropResult.removedIndex !== null || dropResult.addedIndex !== null ) {
+    console.log(dropResult)
+    console.log(columnid)
+  }
+
 }
 function Column(props) {
-  const { column } = props
+  const { column, onCardDrop } = props
   const cards = mapOrder(column.cards, column.cardOrder, 'id')
   return (
     <div className="column">
@@ -28,7 +31,7 @@ function Column(props) {
           // }}
           // onDropReady={p => console.log('Drop ready: ', p)}
           groupName="sonquach-columns"
-          onDrop={onCardDrop}
+          onDrop={dropResult => onCardDrop(column.id, dropResult)}
           getChildPayload={index => cards[index]}
           dragClass="card-ghost"
           dropClass="card-ghost-drop"
@@ -47,7 +50,11 @@ function Column(props) {
           ))}
         </Container>
       </div>
-      <footer>Add another card</footer>
+      <footer>
+        <div className="footer-actions">
+          <i className="fa fa-plus icon"/> Add another card
+        </div>
+      </footer>
     </div>
   )
 }
