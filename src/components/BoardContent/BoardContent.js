@@ -5,6 +5,7 @@ import './BoardContent.scss'
 import './BoardContent.scss'
 import Column from 'components/Column/Column'
 import { mapOrder } from 'utilities/sorts'
+import { applyDrag } from 'utilities/dragDrop'
 import { initialData } from 'actions/initialData'
 
 function BoardContent() {
@@ -23,7 +24,30 @@ function BoardContent() {
   }
   const onColumnDrop = (dropResult) => {
     // eslint-disable-next-line no-console
-    console.log(dropResult)
+    // console.log(dropResult)
+    let newColumns = [...columns]
+    newColumns = applyDrag(newColumns, dropResult)
+    let newBoard = { ...board }
+    newBoard.columnOrder = newColumns.map(c => c.id)
+    newBoard.columns = newColumns
+    // console.log(newBoard)
+    setColumns( newColumns )
+    setBoard(newBoard)
+    // console.log(newColumns)
+    // console.log(columns)
+  }
+  const onCardDrop = (columnid, dropResult) => {
+    if (dropResult.removedIndex !== null || dropResult.addedIndex !== null ) {
+      let newColumns = [...columns]
+      let currentColumn = newColumns.find(c => c.id === columnid)
+      currentColumn.cards = applyDrag(currentColumn.cards, dropResult)
+      currentColumn.cardOrder = currentColumn.cards.map(i => i.id)
+      // console.log(newColumns)
+      setColumns(newColumns)
+      // console.log(currentColumn)
+      // console.log(columnid)
+    }
+
   }
   return (
     <div className="board-content">
@@ -40,11 +64,10 @@ function BoardContent() {
       >
         {columns.map((column, index) => (
           <Draggable key = {index}>
-            <Column column = {column}/>
+            <Column column = {column} onCardDrop = {onCardDrop}/>
           </Draggable>
         ) )}
       </Container>
-
 
     </div>
   )
