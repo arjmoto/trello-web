@@ -3,13 +3,15 @@
 $gap: 10px;
 //color
 $app-main-text-color: #333;
-
 $broad-bg-color: #0079bf;
+$column-bg-color: #ebecf0;
+$common-element-bg:rgba(255, 255, 255, .24);
+$alert-danger: #ee5253;
 // Height: appbar + boardbar + boardcontent = 99vh, 1vh for scroll bar
 $navar-app-height: 5vh;
 $navar-board-height: 6vh;
 $board-content-height:88vh;
-$common-element-bg:rgba(255, 255, 255, .24);
+
 
 //Screen
 $screen-lg: 1201px;

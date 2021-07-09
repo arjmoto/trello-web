@@ -18,18 +18,6 @@ function Column(props) {
       <header className="column-drag-handle">{column.title}</header>
       <div className="card-list">
         <Container
-
-
-          // eslint-disable-next-line no-console
-          // onDragStart={e => console.log('drag started', e)}
-          // onDragEnd={e => console.log('drag end', e)}
-          // onDragEnter={() => {
-          //   console.log('drag enter:', column.id)
-          // }}
-          // onDragLeave={() => {
-          //   console.log('drag leave:', column.id)
-          // }}
-          // onDropReady={p => console.log('Drop ready: ', p)}
           groupName="sonquach-columns"
           onDrop={dropResult => onCardDrop(column.id, dropResult)}
           getChildPayload={index => cards[index]}
