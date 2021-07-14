@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
-
+import parse from 'html-react-parser'
 import { MODAL_ACTION_CLOSE, MODAL_ACTION_CONFIRM } from 'utilities/constants'
 function ConfirmModal(props) {
   const { title, content, show, onAction } = props
@@ -13,9 +13,9 @@ function ConfirmModal(props) {
       animation = {false}
     >
       <Modal.Header closeButton>
-        <Modal.Title className="h5">{title}</Modal.Title>
+        <Modal.Title className="h5">{parse(title)}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{content}</Modal.Body>
+      <Modal.Body>{parse(content)}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={() => onAction(MODAL_ACTION_CLOSE)}>
               Close
