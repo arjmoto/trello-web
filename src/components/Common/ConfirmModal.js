@@ -13,9 +13,9 @@ function ConfirmModal(props) {
       animation = {false}
     >
       <Modal.Header closeButton>
-        <Modal.Title className="h5">parse({title})</Modal.Title>
+        <Modal.Title className="h5">{parse(title)}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>parse({content})</Modal.Body>
+      <Modal.Body>{parse(content)}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={() => onAction(MODAL_ACTION_CLOSE)}>
               Close
