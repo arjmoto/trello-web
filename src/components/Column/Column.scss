@@ -10,7 +10,7 @@ $column-height: calc(#{$board-content-height} - #{$gap * 2});
     width: 300px;
     height: $column-height;
     margin-left: $gap;
-   
+    overflow-y: auto;
     > *{
       background-color: $column-bg-color;
       padding: 0 8px;
