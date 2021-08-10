@@ -13,8 +13,7 @@ import './BoardContent.scss'
 import Column from 'components/Column/Column'
 import { mapOrder } from 'utilities/sorts'
 import { applyDrag } from 'utilities/dragDrop'
-import { fetchBoardDetails } from 'actions/ApiCall'
-
+import { fetchBoardDetails, createNewColumn } from 'actions/ApiCall'
 function BoardContent() {
   const [board, setBoard] = useState({})
   const [columns, setColumns] = useState([])
@@ -70,26 +69,24 @@ function BoardContent() {
       return
     }
     const newColumnToAdd = {
-      id: Math.random().toString(36).substr(2, 5), // 5 random characters, will remove when we implement code api
       boardId: board._id,
-      title: newColumnTitle.trim(),
-      cardOrder: [],
-      cards: []
+      title: newColumnTitle.trim()
     }
-    let newColumns = [...columns]
-    newColumns.push(newColumnToAdd)
-
-    let newBoard = { ...board }
-    newBoard.columnOrder = newColumns.map((c) => c._id)
-    newBoard.columns = newColumns
-    setColumns(newColumns)
-    setBoard(newBoard)
-    setNewColumnTitle('')
-    toggleOpenNewColumnForm()
+    // Call API
+    createNewColumn(newColumnToAdd).then(column => {
+      let newColumns = [...columns]
+      newColumns.push(column)
+      let newBoard = { ...board }
+      newBoard.columnOrder = newColumns.map((c) => c._id)
+      newBoard.columns = newColumns
+      setColumns(newColumns)
+      setBoard(newBoard)
+      setNewColumnTitle('')
+      toggleOpenNewColumnForm()
+    })
   }
-  const onUpdateColumn = (newColumnToUpdate) => {
+  const onUpdateColumnState = (newColumnToUpdate) => {
     const columnIdToUpdate = newColumnToUpdate._id
-
     let newColumns = [...columns]
     const columnIndexToUpdate = newColumns.findIndex(i => i._id === columnIdToUpdate)
     if (newColumnToUpdate._destroy) {
@@ -105,7 +102,6 @@ function BoardContent() {
     setColumns(newColumns)
     setBoard(newBoard)
   }
-
   return (
     <div className="board-content">
       <Container
@@ -121,10 +117,10 @@ function BoardContent() {
       >
         {columns.map((column, index) => (
           <Draggable key={index}>
-            <Column 
+            <Column
               column={column}
               onCardDrop={onCardDrop}
-              onUpdateColumn = {onUpdateColumn}
+              onUpdateColumnState = {onUpdateColumnState}
             />
           </Draggable>
         ))}

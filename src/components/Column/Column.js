@@ -9,8 +9,10 @@ import ConfirmModal from 'components/Common/ConfirmModal'
 import { mapOrder } from 'utilities/sorts'
 import { MODAL_ACTION_CONFIRM } from 'utilities/constants'
 import { saveContentAfterPressEnter, selectAllInLineText } from 'utilities/contentEditable'
+import { createNewCard, updateColumn } from 'actions/ApiCall'
+
 function Column(props) {
-  const { column, onCardDrop, onUpdateColumn } = props
+  const { column, onCardDrop, onUpdateColumnState } = props
   const cards = mapOrder(column.cards, column.cardOrder, '_id')
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const toggleShowConfirmModal = () => setShowConfirmModal(!showConfirmModal)
@@ -36,23 +38,35 @@ function Column(props) {
       newCardTextareaRef.current.select()
     }
   }, [openNewCardForm])
+
+  //Remove column
   const onConfirmModalAction = (type) => {
     if (type === MODAL_ACTION_CONFIRM) {
       const newColumn = {
         ...column,
         _destroy: true
       }
-      onUpdateColumn(newColumn)
+      //Call api update column
+      updateColumn(newColumn._id, newColumn).then(updatedColumn => {
+        onUpdateColumnState(updatedColumn)
+      })
     }
     toggleShowConfirmModal()
   }
-
+  //update column title
   const handleColumnTitleBlur = () => {
-    const newColumn = {
-      ...column,
-      title: columnTitle
+
+    if (column.title !== columnTitle) {
+      const newColumn = {
+        ...column,
+        title: columnTitle
+      }
+      //Call api update column
+      updateColumn(newColumn._id, newColumn).then(updatedColumn => {
+        updatedColumn.cards = newColumn.cards
+        onUpdateColumnState(updatedColumn)
+      })
     }
-    onUpdateColumn(newColumn)
   }
   const addNewCard = () => {
     if (!newCardTitle) {
@@ -60,18 +74,19 @@ function Column(props) {
       return
     }
     const newCardToAdd = {
-      id: Math.random().toString(36).substr(2, 5), // 5 random characters
       boardId: column.boardId,
       columnId: column._id,
-      title: newCardTitle.trim(),
-      cover: null
+      title: newCardTitle.trim()
     }
-    let newColumn = cloneDeep(column)
-    newColumn.cards.push(newCardToAdd)
-    newColumn.cardOrder.push(newCardToAdd._id)
-    onUpdateColumn(newColumn)
-    setNewCardTitle('')
-    toggleOpenNewCardForm()
+    // Call API
+    createNewCard(newCardToAdd).then(card => {
+      let newColumn = cloneDeep(column)
+      newColumn.cards.push(card)
+      newColumn.cardOrder.push(card._id)
+      onUpdateColumnState(newColumn)
+      setNewCardTitle('')
+      toggleOpenNewCardForm()
+    })
   }
   return (
     <div className="column">
